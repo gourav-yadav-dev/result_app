@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .result_field{
+            background-color: antiquewhite;
+            height: 650px;
+            width: 50%;
+            margin:auto;
+border:2px solid black;
+border-radius:5px;
+        }
+        #myForm{
+/* background-color: aqua; */
+/* border:2px solid black; */
+height: 150px;
+width:70%;
+margin:auto;
+text-align: center;;
+line-height: 7;
+}
+#input_field-content{
+font-size:20px;
+}
+#inputField{
+    height:24px;
+    width:200px;
+    border-radius:5px;
+}
+#reset_button, #submit_button{
+    padding:5px 10px 5px 10px;
+    position:relative;
+    top:50px;
+right:180px;
+background-color: black;
+color:white;
+border-radius: 5px;;
+}
+#reset_button:hover,#submit_button:hover{
+
+    background-color: cyan;
+    color:black;
+}
+.result-display{
+    /* background-color:green; */
+    border:2px solid black;
+    height: 500px;
+    width: 100%;
+    
+}
+.result-form{
+    /* background-color: red; */
+width: 100%;
+height: 420px;
+margin:auto;
+}
+.result-form>p,.result>p>span{
+    position:relative;
+    left:150px;
+    font-size:20px;
+    top:30px;
+}
+table th,td{
+border:2px solid black;
+/* border-collapse:collapse; */
+}
+table{
+    border-collapse: collapse;
+    width:410px;
+    position: relative;
+    left:150px;
+    top:40px;
+}
+td{
+    position: relative;
+    left:50px;
+}
+        
+
+    </style>
+
+</head>
+<body>
+  
+        <main content class="result_field">
+            <form id="myForm">
+                <label for="inputField" id="input_field-content">Enter rollno:</label>
+                <input type="number" id="inputField-roll" name="inputField">
+                <button type="reset" id="reset_button"onclick=reset_form()>Reset</button>
+                <button type="submit" id="submit_button" onclick="submit_form()">Submit</button>
+            </form>
+            <div class="result-display">
+<form class="result-form">
+    <p>Rollno: <span class="roll"></span></p>
+    <p>Name:<span class="name"></span></p>
+    <p>FatherName:<span class="fathername"></span>
+    <p>MotherName:<span class="mothername"></span></p>
+    <table class="full-result">
+        <tr>
+            <th class="math">Math</th>
+            <th class="science">Science</th>
+            <th class="english">English</th>
+            </tr>
+            <tr>
+               <td class="math_marks">null</td>
+               <td class="science_marks">null</td>
+               <td class="english_marks">null</td>
+                </tr>
+        </table>
+        <p>result : <span class="result_passorfail">null</span></p>
+        <p>Total-marks :<span class="total_marks">0</span></p>
+        <p>Out :300</p>
+        <p>Percantage:<span class="percantage">0</span><span>%</span></p>
+        <p class="student_record"></p>
+    </form>
+    </div>
+    </main content>
+    
+</body>
+<script>
+const studentsDetails = [
+    { rollNo: 1, name: "John", fatherName: "Michael", motherName: "Emily", marks: { math: 85, science: 90, english: 80 } },
+    { rollNo: 2, name: "Alice", fatherName: "David", motherName: "Sarah", marks: { math: 75, science: 85, english: 90 } },
+    { rollNo: 3, name: "Bob", fatherName: "Richard", motherName: "Laura", marks: { math: 70, science: 80, english: 85 } },
+    { rollNo: 4, name: "Emily", fatherName: "Daniel", motherName: "Jessica", marks: { math: 90, science: 95, english: 92 } },
+    { rollNo: 5, name: "Michael", fatherName: "Christopher", motherName: "Amanda", marks: { math: 88, science: 82, english: 87 } },
+    { rollNo: 6, name: "Sarah", fatherName: "Matthew", motherName: "Olivia", marks: { math: 78, science: 88, english: 82 } },
+    { rollNo: 7, name: "William", fatherName: "Andrew", motherName: "Sophia", marks: { math: 85, science: 92, english: 89 } },
+    { rollNo: 8, name: "Emma", fatherName: "Joshua", motherName: "Isabella", marks: { math: 92, science: 90, english: 95 } },
+    { rollNo: 9, name: "James", fatherName: "Ryan", motherName: "Charlotte", marks: { math: 79, science: 84, english: 81 } },
+    { rollNo: 10, name: "Oliver", fatherName: "Joseph", motherName: "Amelia", marks: { math: 83, science: 87, english: 88 } },
+    // Add more student details below as needed...
+    { rollNo: 11, name: "Sophie", fatherName: "Adam", motherName: "Hannah", marks: { math: 91, science: 94, english: 90 } },
+    { rollNo: 12, name: "Matthew", fatherName: "Nathan", motherName: "Lily", marks: { math: 87, science: 85, english: 88 } },
+    { rollNo: 13, name: "Ella", fatherName: "Jack", motherName: "Grace", marks: { math: 84, science: 82, english: 85 } },
+    { rollNo: 14, name: "Daniel", fatherName: "Benjamin", motherName: "Lucy", marks: { math: 89, science: 91, english: 87 } },
+    { rollNo: 15, name: "Mia", fatherName: "Alexander", motherName: "Zoe", marks: { math: 93, science: 90, english: 94 } },
+    // Add more student details below as needed...
+    { rollNo: 16, name: "fff", fatherName: "zzffander", motherName: "Zdd", marks: { math: 20, science: 90, english: 94 } },
+
+];
+function submit_form(){
+   const roll=document.querySelector('input[type="number"]')
+   const rollnumber=roll.value;
+   event.preventDefault();
+   if(rollnumber>=1 && rollnumber<=16){
+    // console.log(rollnumber)
+    document.querySelector(".roll").textContent=rollnumber;
+
+const studentName=studentsDetails[rollnumber-1].name
+document.querySelector(".name").textContent=studentName
+const fatherName=studentsDetails[rollnumber-1].fatherName
+document.querySelector(".fathername").textContent=fatherName
+const motherName=studentsDetails[rollnumber-1].motherName
+document.querySelector(".mothername").textContent=motherName
+const mathmarks=studentsDetails[rollnumber-1].marks.math
+document.querySelector('.math_marks').innerHTML=mathmarks
+const sciencemarks=studentsDetails[rollnumber-1].marks.science;
+document.querySelector('.science_marks').innerHTML=sciencemarks
+const englismarks=studentsDetails[rollnumber-1].marks.english;
+document.querySelector('.english_marks').innerHTML=sciencemarks
+ 
+const totalmarks=(mathmarks+sciencemarks+englismarks)
+document.querySelector(".total_marks").innerHTML=totalmarks
+const percantage=((totalmarks)/3);
+document.querySelector(".percantage").innerText=percantage;
+if((studentsDetails[rollnumber-1].marks.math>=33 &&studentsDetails[rollnumber-1].marks.science>=33)&&studentsDetails[rollnumber-1].marks.english){
+document.querySelector(".result_passorfail").innerHTML="pass"
+   }
+   else{
+    document.querySelector(".result_passorfail").innerHTML="fail"   
+   }
+}
+else if(rollnumber>=16){
+    document.querySelector('.student_record').textContent="student record not found"
+    // event.preventDefault();
+}
+
+
+}
+function reset_form(){
+
+const spantag=document.querySelectorAll('span')
+// console.log(spantag);
+spantag.forEach((tag)=>{
+tag.innerHTML=""
+// id.innerHTML=""
+})
+const table_data=document.querySelectorAll('td')
+// console.log(table_data);
+table_data.forEach((marks)=>{
+marks.innerHTML=""
+})
+const record=document.querySelector('.student_record')
+// console.log(record);
+record.innerText=""
+// console.log(record);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</html>
